@@ -1,7 +1,9 @@
 package com.casestudy.controller;
 
 import java.security.Principal;
+import java.util.Optional;
 
+import com.casestudy.model.Product;
 import com.casestudy.model.User;
 import com.casestudy.service.category.ICategoryService;
 import com.casestudy.service.product.IProductService;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -34,18 +37,32 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
-    public ModelAndView index() {
+    public ModelAndView index(@RequestParam("q") Optional<String> name) {
+        Iterable<Product> products;
+        if (name.isPresent()) {
+            products = productService.findByName(name.get());
+        }
+        else {
+            products = productService.findAll();
+        }
         ModelAndView modelAndView = new ModelAndView("/customerView/home");
-        modelAndView.addObject("products", productService.findAll());
+        modelAndView.addObject("products", products);
         modelAndView.addObject("categories", categoryService.findAll());
         return modelAndView;
     }
 
     @GetMapping("/user")
-    public ModelAndView user(Principal principal) {
+    public ModelAndView user(Principal principal, @RequestParam("q") Optional<String> name) {
         // Get authenticated user name from Principal
+        Iterable<Product> products;
+        if (name.isPresent()) {
+            products = productService.findByName(name.get());
+        }
+        else {
+            products = productService.findAll();
+        }
         ModelAndView modelAndView = new ModelAndView("/customerView/home");
-        modelAndView.addObject("products", productService.findAll());
+        modelAndView.addObject("products", products);
         modelAndView.addObject("categories", categoryService.findAll());
         System.out.println(principal.getName());
         return modelAndView;
