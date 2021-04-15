@@ -3,6 +3,8 @@ package com.casestudy.service.user;
 import com.casestudy.model.User;
 import com.casestudy.repository.user.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +28,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public Page<User> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
@@ -35,15 +42,4 @@ public class UserService implements IUserService {
         userRepository.deleteById(id);
     }
 
-    @Override
-    public Iterable<User> findByName(String name) {
-        Iterable<User> users = findAll();
-        ArrayList<User> results = new ArrayList<>();
-        for (User u : users) {
-            if (u.getName().toLowerCase().contains(name.toLowerCase())) {
-                results.add(u);
-            }
-        }
-        return results;
-    }
 }

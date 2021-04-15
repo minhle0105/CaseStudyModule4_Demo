@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <title>Nozama.com - Online Shopping</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <style>
         tr, th {
             text-align: center;
@@ -21,7 +19,7 @@
     <div class="row">
         <div class="col-md-6">
             <div sec:authorize="isAnonymous()">
-                <h1>Log in to begin your shopping journey</h1>
+                <h1><a th:href="@{/}">NOZAMA.COM</a></h1>
                 <a th:href="@{/login}" class="btn btn-primary">Login</a>
             </div>
             <div sec:authorize="isAuthenticated()">
@@ -33,7 +31,7 @@
         </div>
         <div class="col-md-6">
             <form style="margin-top: 10px">
-                <div class="input-group mb-3">
+                <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search for product by name">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-secondary">
@@ -52,7 +50,6 @@
                     </div>
                 </div>
             </form>
-        </div>
         </div>
     </div>
     <div class="row"></div>
@@ -85,6 +82,18 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="row">
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{'/'(page=${products.number - 1})}" th:if="${products.hasPrevious()}">Previous</a>
+            <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
+            <a th:href="@{'/'(page=${products.number + 1})}" th:if="${products.hasNext()}">Next</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{'/user'(page=${products.number - 1})}" th:if="${products.hasPrevious()}">Previous</a>
+            <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
+            <a th:href="@{'/user'(page=${products.number + 1})}" th:if="${products.hasNext()}">Next</a>
+        </div>
     </div>
 </div>
 </body>
