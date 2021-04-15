@@ -72,8 +72,10 @@ public class ProductController {
         product.setCategory(productForm.getCategory());
         product.setImgUrl(fileName);
         productService.save(product);
+        Iterable<Category> categories = categoryService.findAll();
         ModelAndView modelAndView = new ModelAndView("adminView-product/create");
         modelAndView.addObject("product", new ProductForm());
+        modelAndView.addObject("categories", categories);
         return modelAndView;
     }
 
