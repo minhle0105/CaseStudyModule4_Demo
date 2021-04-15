@@ -48,9 +48,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
 
         if (isAdmin(roles)) {
-            url = "/adminView-product/list";
+            url = "/admin";
         } else if (isUser(roles)) {
-            url = "/customerView-product/list";
+            url = "/user";
         } else {
             url = "/error-404";
         }
