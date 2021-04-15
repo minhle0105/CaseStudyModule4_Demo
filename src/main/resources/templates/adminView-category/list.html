@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+<div class="container" style="border: 1px solid mediumslateblue; margin-top: 10px">
+    <div class="row">
+        <div class="col-md-3">
+            <h1>Category List</h1>
+            <a th:href="@{/categories/create}" class="btn btn-success">Add new category</a>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-5"></div>
+    </div>
+    <div class="row">
+        <a th:href="@{/logout}" style="margin-left: 20px">Log out</a>
+    </div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Category Name</th>
+                <th scope="col" colspan="2">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${categories}">
+                <td th:text="${category.name}"></td>
+                <td><a th:href="@{/categories/delete/__${category.id}__}" class="btn btn-danger">Delete</a></td>
+                <td><a th:href="@{/categories/edit/__${category.id}__}" class="btn btn-primary">Edit</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

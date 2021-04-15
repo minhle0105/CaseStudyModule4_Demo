@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Nozama.com - Online Shopping</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <style>
+        tr, th {
+            text-align: center;
+        }
+        td {
+            vertical-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div sec:authorize="isAnonymous()">
+                <h1>Log in to begin your shopping journey</h1>
+                <a th:href="@{/login}" class="btn btn-primary">Login</a>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <h1>Welcome <span sec:authentication="principal.username"></span>!</h1>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+        </div>
+    </div>
+    <div class="row"></div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Price</th>
+                <th scope="col">Product Image</th>
+                <th scope="col">Product Description</th>
+                <th scope="col">Product Category</th>
+                <th scope="col">Cart</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td>
+                    <img th:src="@{'../' + ${product.imgUrl}}" alt="Error" width="100" height="100">
+                </td>
+                <td th:text="${product.category != null ? product.category.name : ''}"></td>
+                <td th:text="${product.description}"></td>
+                <td>
+                    <div sec:authorize="isAnonymous()">Log in to purchase</div>
+                    <div sec:authorize="isAuthenticated()"><a th:href="@{/add/__${product.id}__(action='user-show')}">Add
+                        to cart</a></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

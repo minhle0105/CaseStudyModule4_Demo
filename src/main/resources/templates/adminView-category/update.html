@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Category</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+<div class="container" style="border: 1px solid mediumslateblue; margin-top: 10px">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Update Category Form</h1>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <a th:href="@{/categories/list}" class="btn btn-link">Back to category list</a>
+        </div>
+    </div>
+    <div class="row">
+        <form th:object="${category}" th:action="@{/categories/update}" method="post">
+            <div class="form-group">
+                <label for="productId">Product ID</label>
+                <input type="hidden" readonly class="form-control" id="productId" th:field="*{id}">
+            </div>
+            <div class="form-group">
+                <label for="productName">Product Name</label>
+                <input type="text" class="form-control" id="productName" th:field="*{name}">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
