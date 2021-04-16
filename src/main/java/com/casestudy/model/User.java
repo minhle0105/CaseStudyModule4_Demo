@@ -18,30 +18,30 @@ public class User implements Validator {
     private Long id;
 
     @NotNull(message = "Enter your email address ")
-    @Size(min = 2,max = 45, message = "Your email must be at least 2 characters")
+    @Size(min = 2,max = 45, message = "Email address must be 2-45 characters long ")
     @Column(name = "email")
     private String email;
 
     @NotNull
-    @Size(min = 2,max = 45, message = "Your name must be at least 2 characters ")
+    @Size(min = 2,max = 45, message = "Name must be 2-45 characters long ")
     @Column(name = "name")
     private String name;
 
     @NotNull(message = "Enter your username ")
     @Column
-    @Size(min = 2, max = 10,message = "Your username must be at least 2 characters ")
+    @Size(min = 2, max = 15,message = "Username must be 2-15 characters long ")
     private String username;
 
     @NotNull(message = "Enter your password ")
     private String password;
 
     @NotNull(message = "Enter your phone number ")
-    @Size(min = 9,max = 11,message = "Your username must be at least 9 characters and longest 11 characters")
+    @Size(min = 9,max = 11,message = "Phone number must be 9-11 digits long ")
     @Column
     private String phoneNumber;
 
     @NotNull(message = "Enter your address ")
-    @Size(min = 2, max = 20,message = "Your address must be at least 2 characters")
+    @Size(min = 2, max = 100,message = "Address must be 2-100 characters long ")
     @Column
     private String addRess;
 
