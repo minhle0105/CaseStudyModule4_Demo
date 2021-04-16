@@ -1,9 +1,7 @@
 package com.casestudy.controller;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.casestudy.model.User;
 import com.casestudy.service.category.ICategoryService;
@@ -86,14 +84,11 @@ public class UserController {
     @PostMapping("/signup")
     public ModelAndView SignUp(@Valid @ModelAttribute("newUser") User user, BindingResult bindingResult){
         user.validate(user,bindingResult, (List<User>) userService.findAll());
-        Set<User> i = new HashSet<>();
-
         if (bindingResult.hasFieldErrors()){
             return new ModelAndView("/customerView/signup");
         }
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setRoles();
         userService.save(user);
         return new ModelAndView("/customerView/login");
     }
