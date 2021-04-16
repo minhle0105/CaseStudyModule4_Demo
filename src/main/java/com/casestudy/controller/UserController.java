@@ -1,10 +1,13 @@
 package com.casestudy.controller;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.casestudy.model.Product;
+import com.casestudy.model.Role;
 import com.casestudy.model.User;
 import com.casestudy.service.category.ICategoryService;
 import com.casestudy.service.product.IProductService;
@@ -116,6 +119,11 @@ public class UserController {
         }
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role role = new Role();
+        role.setId(2);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
         userService.save(user);
         return new ModelAndView("/customerView/login");
     }
