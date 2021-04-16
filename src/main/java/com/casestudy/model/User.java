@@ -21,7 +21,7 @@ public class User implements Validator {
 
     @NotNull(message = "Enter your email address ")
     @Size(min = 2,max = 45, message = "Your email must be at least 2 characters")
-    @Column(name = "email", columnDefinition = "VARCHAR(50)", unique = true)
+    @Column(name = "email")
     private String email;
 
     @NotNull
@@ -30,7 +30,7 @@ public class User implements Validator {
     private String name;
 
     @NotNull(message = "Enter your username ")
-    @Column(columnDefinition = "VARCHAR(50)", unique = true)
+    @Column
     @Size(min = 2, max = 10,message = "Your username must be at least 2 characters ")
     private String username;
 
@@ -39,12 +39,12 @@ public class User implements Validator {
 
     @NotNull(message = "Enter your phone number ")
     @Size(min = 9,max = 11,message = "Your username must be at least 9 characters and longest 11 characters")
-    @Column(columnDefinition = "VARCHAR(50)", unique = true)
+    @Column
     private String phoneNumber;
 
     @NotNull(message = "Enter your address ")
     @Size(min = 2, max = 20,message = "Your address must be at least 2 characters")
-    @Column(columnDefinition = "VARCHAR(50)", unique = true)
+    @Column
     private String addRess;
 
     private boolean enabled;
