@@ -1,6 +1,7 @@
 package com.casestudy.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import com.casestudy.model.Product;
@@ -18,11 +19,14 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
@@ -105,10 +109,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String SignUp(@ModelAttribute User user){
+    public ModelAndView SignUp(@Valid @ModelAttribute("newUser") User user, BindingResult bindingResult){
+        user.validate(user,bindingResult, (List<User>) userService.findAll());
+        if (bindingResult.hasFieldErrors()){
+            return new ModelAndView("/customerView/signup");
+        }
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
-        return "redirect:/login";
+        return new ModelAndView("/customerView/login");
     }
 }
