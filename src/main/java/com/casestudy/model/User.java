@@ -1,42 +1,50 @@
 package com.casestudy.model;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Validator {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(min = 2,max = 45)
-    @Column(name = "email")
+    @NotNull(message = "Enter your email address ")
+    @Size(min = 2,max = 45, message = "Your email must be at least 2 characters")
+    @Column(name = "email", columnDefinition = "VARCHAR(50)", unique = true)
     private String email;
 
     @NotNull
-    @Size(min = 2,max = 45)
+    @Size(min = 2,max = 45, message = "Your name must be at least 2 characters ")
     @Column(name = "name")
     private String name;
 
-    @NotNull
-    @Size(min = 2, max = 10)
+    @NotNull(message = "Enter your username ")
+    @Column(columnDefinition = "VARCHAR(50)", unique = true)
+    @Size(min = 2, max = 10,message = "Your username must be at least 2 characters ")
     private String username;
 
-    @NotNull
+    @NotNull(message = "Enter your password ")
     private String password;
 
-    @NotNull
-    @Size(min = 9,max = 11)
+    @NotNull(message = "Enter your phone number ")
+    @Size(min = 9,max = 11,message = "Your username must be at least 9 characters and longest 11 characters")
+    @Column(columnDefinition = "VARCHAR(50)", unique = true)
     private String phoneNumber;
 
-    @NotNull
-    @Size(min = 2, max = 20)
+    @NotNull(message = "Enter your address ")
+    @Size(min = 2, max = 20,message = "Your address must be at least 2 characters")
+    @Column(columnDefinition = "VARCHAR(50)", unique = true)
     private String addRess;
 
     private boolean enabled;
@@ -122,5 +130,35 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
+    }
+
+    public void validate(Object target, Errors errors, List<User> users) {
+
+        User user = (User) target;
+        String email = user.getEmail();
+        String username = user.getUsername();
+        String phoneNumber = user.getPhoneNumber();
+
+        for (User u:users) {
+            if (u.getEmail().equals(email)){
+                errors.rejectValue("email", "email.unique");
+            }
+            if (u.getUsername().equals(username)){
+                errors.rejectValue("username", "username.unique");
+            }
+            if (u.getPhoneNumber().equals(phoneNumber)){
+                errors.rejectValue("phoneNumber", "phoneNumber.unique");
+            }
+        }
     }
 }

@@ -150,6 +150,11 @@ h1 {
     margin-bottom: 20px;
 }
 
+.agileits-top span{
+    margin-bottom: 10px;
+    color: red;
+}
+
 input[type="text"], input[type="email"], input[type="password"] {
     font-size: 0.9em;
     color: #fff;
