@@ -1,17 +1,26 @@
 package com.casestudy.controller;
 
 import com.casestudy.model.Category;
+import com.casestudy.model.CategoryForm;
 import com.casestudy.service.category.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/categories")
 public class CategoryController {
+
+    @Value(value = "${upload.path}")
+    private String fileUpload;
 
     @Autowired
     private ICategoryService categoryService;
@@ -32,10 +41,21 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public ModelAndView createProduct(@ModelAttribute Category category) {
+    public ModelAndView createProduct(@ModelAttribute CategoryForm categoryForm) {
+        Category category = new Category();
+        MultipartFile multipartFile = categoryForm.getImageLink();
+        String fileName = multipartFile.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(categoryForm.getImageLink().getBytes(), new File(this.fileUpload + fileName));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        category.setName(categoryForm.getName());
+        category.setImageLink(fileName);
         categoryService.save(category);
         ModelAndView modelAndView = new ModelAndView("adminView-category/create");
-        modelAndView.addObject("category", new Category());
+        modelAndView.addObject("category", new CategoryForm());
         return modelAndView;
     }
 
