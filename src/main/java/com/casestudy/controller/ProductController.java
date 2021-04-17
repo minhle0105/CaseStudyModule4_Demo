@@ -7,6 +7,9 @@ import com.casestudy.service.category.ICategoryService;
 import com.casestudy.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +34,13 @@ public class ProductController {
     private ICategoryService categoryService;
 
     @GetMapping("/list")
-    public ModelAndView showAll(@RequestParam("q") Optional<String> name) {
-        Iterable<Product> products;
+    public ModelAndView showAll(@RequestParam("q") Optional<String> name, @PageableDefault(size = 5) Pageable pageable) {
+        Page<Product> products;
         if (name.isPresent()) {
-            products = productService.findByName(name.get());
+            products = productService.findAllByNameContaining(name.get(), pageable);
         }
         else {
-            products = productService.findAll();
+            products = productService.findAll(pageable);
         }
         Iterable<Category> categories = categoryService.findAll();
         ModelAndView modelAndView = new ModelAndView("/adminView-product/list");
@@ -72,8 +75,10 @@ public class ProductController {
         product.setCategory(productForm.getCategory());
         product.setImgUrl(fileName);
         productService.save(product);
+        Iterable<Category> categories = categoryService.findAll();
         ModelAndView modelAndView = new ModelAndView("adminView-product/create");
         modelAndView.addObject("product", new ProductForm());
+        modelAndView.addObject("categories", categories);
         return modelAndView;
     }
 

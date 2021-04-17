@@ -3,6 +3,8 @@ package com.casestudy.service.product;
 import com.casestudy.model.Product;
 import com.casestudy.repository.product.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +27,11 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    public Page<Product> findAll(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+    @Override
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
     }
@@ -35,14 +42,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Iterable<Product> findByName(String name) {
-        Iterable<Product> products = findAll();
-        ArrayList<Product> results = new ArrayList<>();
-        for (Product p : products) {
-            if (p.getName().toLowerCase().contains(name.toLowerCase())) {
-                results.add(p);
-            }
-        }
-        return results;
+    public Page<Product> findAllByNameContaining(String name, Pageable pageable) {
+        return productRepository.findAllByNameContaining(name, pageable);
     }
 }

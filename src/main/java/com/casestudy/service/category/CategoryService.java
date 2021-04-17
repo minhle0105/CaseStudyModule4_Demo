@@ -3,6 +3,8 @@ package com.casestudy.service.category;
 import com.casestudy.model.Category;
 import com.casestudy.repository.category.ICategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +27,11 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    public Page<Category> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public Optional<Category> findById(Long id) {
         return categoryRepository.findById(id);
     }
@@ -34,15 +41,4 @@ public class CategoryService implements ICategoryService {
         categoryRepository.deleteById(id);
     }
 
-    @Override
-    public Iterable<Category> findByName(String name) {
-        Iterable<Category> categories = findAll();
-        ArrayList<Category> results = new ArrayList<>();
-        for (Category c : categories) {
-            if (c.getName().toLowerCase().contains(name.toLowerCase())) {
-                results.add(c);
-            }
-        }
-        return results;
-    }
 }
