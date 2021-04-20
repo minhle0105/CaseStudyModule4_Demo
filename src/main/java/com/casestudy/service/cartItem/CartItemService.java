@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -53,8 +54,14 @@ public class CartItemService implements ICartItemService {
     }
 
     @Override
-    public CartItem findQuantity(User user, Product product) {
-        return cartItemRepository.findQuantity(user, product);
+    public CartItem findCartItem(User user, Product product) {
+        return cartItemRepository.findCartItem(user, product);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCartItemByUser(Long id) {
+        cartItemRepository.deleteCartItemByUser(id);
     }
 
 }

@@ -24,7 +24,8 @@ public interface ICartItemService extends IGeneralService<CartItem> {
 
     void remove(Long id);
 
-    CartItem findQuantity(User user, Product product);
+    CartItem findCartItem(User user, Product product);
 
+    void deleteCartItemByUser(Long id);
 
 }

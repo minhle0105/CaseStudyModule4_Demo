@@ -1,7 +1,7 @@
 package com.casestudy.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 
 import javax.persistence.*;
 
