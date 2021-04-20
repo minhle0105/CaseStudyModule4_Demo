@@ -6,14 +6,20 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
+    <div class="row">
+        <h1><a th:href="@{/}">NOZAMA.COM</a></h1>
+    </div>
+    <div class="row">
+        <h1><span th:text="${username}"></span>'s cart</h1>
+    </div>
     <div class="row">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Product Name</th>
                 <th>Product Quantity</th>
-                <th>SubTotal</th>
+                <th>Subtotal Amount</th>
             </tr>
             </thead>
             <tbody>
@@ -29,8 +35,9 @@
             </tr>
             <tr>
                 <td></td>
-                <td>Total</td>
-                <td th:text="${sum}" colspan="2"></td>
+                <td>Total Amount</td>
+                <td th:text="${sum}"></td>
+                <td><a class="btn btn-success" href="#">Pay Now</a></td>
             </tr>
             </tbody>
         </table>
