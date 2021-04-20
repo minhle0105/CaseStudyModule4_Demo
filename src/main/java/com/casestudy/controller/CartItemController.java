@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.security.Principal;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class CartItemController {
         ModelAndView modelAndView = new ModelAndView("customerView/cart");
         double sum = 0.0;
         for (CartItem cartItem : cartItems) {
-            sum+=(cartItem.getProduct().getPrice() * cartItem.getQuantity());
+            sum += (cartItem.getProduct().getPrice() * cartItem.getQuantity());
         }
         modelAndView.addObject("cartItems", cartItems);
         modelAndView.addObject("sum", sum);
@@ -54,14 +55,12 @@ public class CartItemController {
             CartItem existedCartItem = cartItemService.findCartItem(user, product.get());
             if (existedCartItem == null) {
                 cartItem.setQuantity(1);
-            }
-            else {
+            } else {
                 cartItem.setId(existedCartItem.getId());
-                cartItem.setQuantity(existedCartItem.getQuantity()+1);
+                cartItem.setQuantity(existedCartItem.getQuantity() + 1);
             }
             cartItemService.save(cartItem);
-        }
-        else {
+        } else {
             return null;
         }
         return "redirect:/user";

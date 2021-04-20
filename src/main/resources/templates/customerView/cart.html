@@ -26,9 +26,11 @@
             <tr th:each="cartItem : ${cartItems}">
                 <td th:text="${cartItem.getProduct().getName()}"></td>
                 <td>
-                    <a th:href="@{/cart/update/__${username}__/__${cartItem.id}__(action='decrease')}" th:text="${'-'}"></a>
+                    <a th:href="@{/cart/update/__${username}__/__${cartItem.id}__(action='decrease')}"
+                       th:text="${'-'}"></a>
                     <span th:text="${cartItem.quantity}"></span>
-                    <a th:href="@{/cart/update/__${username}__/__${cartItem.id}__(action='increase')}" th:text="${'+'}"></a>
+                    <a th:href="@{/cart/update/__${username}__/__${cartItem.id}__(action='increase')}"
+                       th:text="${'+'}"></a>
                 </td>
                 <td th:text="${cartItem.quantity*cartItem.getProduct().getPrice()}"></td>
                 <td><a th:href="@{/cart/delete/__${cartItem.id}__/__${username}__}">Remove</a></td>

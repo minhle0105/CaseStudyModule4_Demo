@@ -48,7 +48,7 @@ public class UserController {
 
     @ModelAttribute("username")
     public String getUsername(Principal principal) {
-        if(principal != null){
+        if (principal != null) {
             String username = principal.getName();
             return principal.getName();
 
