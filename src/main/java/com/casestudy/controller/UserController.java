@@ -46,13 +46,22 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @ModelAttribute("username")
+    public String getUsername(Principal principal) {
+        if(principal != null){
+            String username = principal.getName();
+            return principal.getName();
+
+        }
+        return "";
+    }
+
     @GetMapping("/")
     public ModelAndView index(@RequestParam("q") Optional<String> name, @PageableDefault(size = 5) Pageable pageable) {
         Page<Product> products;
         if (name.isPresent()) {
             products = productService.findAllByNameContaining(name.get(), pageable);
-        }
-        else {
+        } else {
             products = productService.findAll(pageable);
         }
         ModelAndView modelAndView = new ModelAndView("/customerView/home");
@@ -67,13 +76,13 @@ public class UserController {
         Page<Product> products;
         if (name.isPresent()) {
             products = productService.findAllByNameContaining(name.get(), pageable);
-        }
-        else {
+        } else {
             products = productService.findAll(pageable);
         }
         ModelAndView modelAndView = new ModelAndView("/customerView/home");
         modelAndView.addObject("products", products);
         modelAndView.addObject("categories", categoryService.findAll());
+        modelAndView.addObject("username", principal.getName());
         System.out.println(principal.getName());
         return modelAndView;
     }
@@ -81,7 +90,7 @@ public class UserController {
     @GetMapping("/login")
     public String login() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken){
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "/customerView/login";
         }
         return "redirect:/";
@@ -95,8 +104,7 @@ public class UserController {
         Page<Product> products;
         if (name.isPresent()) {
             products = productService.findAllByNameContaining(name.get(), pageable);
-        }
-        else {
+        } else {
             products = productService.findAll(pageable);
         }
         ModelAndView modelAndView = new ModelAndView("/adminView-product/list");
@@ -105,16 +113,16 @@ public class UserController {
     }
 
     @GetMapping("/signup")
-    public ModelAndView showSignUpForm(){
+    public ModelAndView showSignUpForm() {
         ModelAndView modelAndView = new ModelAndView("/customerView/signup");
         modelAndView.addObject("newUser", new User());
         return modelAndView;
     }
 
     @PostMapping("/signup")
-    public ModelAndView SignUp(@Valid @ModelAttribute("newUser") User user, BindingResult bindingResult){
-        user.validate(user,bindingResult, (List<User>) userService.findAll());
-        if (bindingResult.hasFieldErrors()){
+    public ModelAndView SignUp(@Valid @ModelAttribute("newUser") User user, BindingResult bindingResult) {
+        user.validate(user, bindingResult, (List<User>) userService.findAll());
+        if (bindingResult.hasFieldErrors()) {
             return new ModelAndView("/customerView/signup");
         }
         user.setEnabled(true);

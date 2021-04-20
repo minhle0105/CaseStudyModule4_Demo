@@ -27,6 +27,7 @@
             </div>
             <div sec:authorize="isAuthenticated()">
                 <a th:href="@{/logout}">Logout</a>
+                <a th:href="@{cart/show/__${username}__}">Your cart</a>
             </div>
         </div>
         <div class="col-md-6">
@@ -76,7 +77,7 @@
                 <td th:text="${product.description}"></td>
                 <td>
                     <div sec:authorize="isAnonymous()">Log in to purchase</div>
-                    <div sec:authorize="isAuthenticated()"><a th:href="@{/add/__${product.id}__(action='user-show')}">Add
+                    <div sec:authorize="isAuthenticated()"><a th:href="@{/cart/add/__${username}__/__${product.id}__}">Add
                         to cart</a></div>
                 </td>
             </tr>
