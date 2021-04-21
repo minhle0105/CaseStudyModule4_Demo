@@ -87,6 +87,17 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/product-list")
+    public ModelAndView showProductListForCustomer(Principal principal, @PageableDefault(size = 10) Pageable pageable) {
+        Page<Product> products = productService.findAll(pageable);
+        ModelAndView modelAndView = new ModelAndView("customerView/home-product");
+        modelAndView.addObject("products", products);
+        if (principal != null) {
+            modelAndView.addObject("username", principal.getName());
+        }
+        return modelAndView;
+    }
+
     @GetMapping("/login")
     public String login() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
