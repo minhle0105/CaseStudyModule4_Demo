@@ -164,4 +164,41 @@ public class UserController {
         userService.save(user);
         return "redirect:/";
     }
+
+    @GetMapping("/forgot")
+    public ModelAndView showFormForgot(){
+        User user = new User();
+        ModelAndView modelAndView = new ModelAndView("/customerView/forgotpassword");
+        modelAndView.addObject("userCheck",user);
+        return modelAndView;
+    }
+
+    @PostMapping("/checkUserName")
+    public ModelAndView checkUserName(@ModelAttribute("userCheck") User user){
+        ModelAndView modelAndView = null;
+        Iterable<User> all = userService.findAll();
+        for (User u:all) {
+            if (u.getUsername().equals(user.getUsername()) && u.getEmail().equals(user.getEmail())){
+                modelAndView = new ModelAndView("/customerView/changepassword");
+                User user1 = userService.findByUsername(user.getUsername());
+                modelAndView.addObject("CheckUser",user1);
+            }else {
+                modelAndView = new ModelAndView("/customerView/login");
+            }
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/NewPass")
+    public String updateNewPassWord(@ModelAttribute("CheckUser") User user){
+        user.setEnabled(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role role = new Role();
+        role.setId(2);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
+        userService.save(user);
+        return "redirect:/";
+    }
 }
