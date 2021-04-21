@@ -66,8 +66,7 @@ public class CategoryController {
         if (categoryOptional.isPresent()) {
             modelAndView = new ModelAndView("adminView-category/update");
             modelAndView.addObject("category", categoryOptional.get());
-        }
-        else {
+        } else {
             modelAndView = new ModelAndView("error-404");
         }
         return modelAndView;
@@ -86,8 +85,7 @@ public class CategoryController {
         if (category.isPresent()) {
             modelAndView = new ModelAndView("/adminView-category/delete");
             modelAndView.addObject("category", category);
-        }
-        else {
+        } else {
             modelAndView = new ModelAndView("error-404");
         }
         return modelAndView;

@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -15,7 +14,6 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
-
 
     @Override
     public Iterable<User> findAll() {
@@ -42,4 +40,8 @@ public class UserService implements IUserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.getUserByUserName(username);
+    }
 }

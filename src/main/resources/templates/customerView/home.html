@@ -50,10 +50,10 @@
         </div>
         <nav class="amado-nav">
             <ul>
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="product-details.html">Product</a></li>
-                <li><a href="cart.html">Cart</a></li>
+                <li class="active"><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/}">Shop</a></li>
+                <li><a th:href="@{/product-list}">Product</a></li>
+                <li><a th:href="@{/cart/show/__${username}__}">Cart</a></li>
             </ul>
         </nav>
 
@@ -61,7 +61,8 @@
             <a th:href="@{/login}" class="btn amado-btn mb-15">Login</a>
         </div>
         <div class="amado-btn-group mt-30 mb-100" sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}"><span sec:authentication="principal.username" class="btn amado-btn mb-15"></span></a>
+            <h2> Welcome <span sec:authentication="principal.username"></span>!</h2>
+            <a th:href="@{/logout}" class="btn amado-btn mb-15">Log out</a>
         </div>
 
 <div class="cart-fav-search mb-100">

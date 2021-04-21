@@ -1,4 +1,5 @@
 package com.casestudy.model;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -18,30 +19,30 @@ public class User implements Validator {
     private Long id;
 
     @NotNull(message = "Enter your email address ")
-    @Size(min = 2,max = 45, message = "Email address must be 2-45 characters long ")
+    @Size(min = 2, max = 45, message = "Email address must be 2-45 characters long ")
     @Column(name = "email")
     private String email;
 
     @NotNull
-    @Size(min = 2,max = 45, message = "Name must be 2-45 characters long ")
+    @Size(min = 2, max = 45, message = "Name must be 2-45 characters long ")
     @Column(name = "name")
     private String name;
 
     @NotNull(message = "Enter your username ")
     @Column
-    @Size(min = 2, max = 15,message = "Username must be 2-15 characters long ")
+    @Size(min = 2, max = 15, message = "Username must be 2-15 characters long ")
     private String username;
 
     @NotNull(message = "Enter your password ")
     private String password;
 
     @NotNull(message = "Enter your phone number ")
-    @Size(min = 9,max = 11,message = "Phone number must be 9-11 digits long ")
+    @Size(min = 9, max = 11, message = "Phone number must be 9-11 digits long ")
     @Column
     private String phoneNumber;
 
     @NotNull(message = "Enter your address ")
-    @Size(min = 2, max = 100,message = "Address must be 2-100 characters long ")
+    @Size(min = 2, max = 100, message = "Address must be 2-100 characters long ")
     @Column
     private String addRess;
 
@@ -147,14 +148,14 @@ public class User implements Validator {
         String username = user.getUsername();
         String phoneNumber = user.getPhoneNumber();
 
-        for (User u:users) {
-            if (u.getEmail().equals(email)){
+        for (User u : users) {
+            if (u.getEmail().equals(email)) {
                 errors.rejectValue("email", "email.unique");
             }
-            if (u.getUsername().equals(username)){
+            if (u.getUsername().equals(username)) {
                 errors.rejectValue("username", "username.unique");
             }
-            if (u.getPhoneNumber().equals(phoneNumber)){
+            if (u.getPhoneNumber().equals(phoneNumber)) {
                 errors.rejectValue("phoneNumber", "phoneNumber.unique");
             }
         }
