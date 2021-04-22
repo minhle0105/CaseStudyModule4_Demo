@@ -50,7 +50,6 @@ public class UserController {
         if (principal != null) {
             String username = principal.getName();
             return principal.getName();
-
         }
         return "";
     }
@@ -58,14 +57,16 @@ public class UserController {
     @GetMapping("/")
     public ModelAndView index(@RequestParam("q") Optional<String> name, @PageableDefault(size = 5) Pageable pageable) {
         Page<Product> products;
+        ModelAndView modelAndView;
         if (name.isPresent()) {
             products = productService.findAllByNameContaining(name.get(), pageable);
+            modelAndView = new ModelAndView("/customerView/home-product");
+            modelAndView.addObject("products", products);
         } else {
             products = productService.findAll(pageable);
+            modelAndView = new ModelAndView("/customerView/home");
+            modelAndView.addObject("categories", categoryService.findAll());
         }
-        ModelAndView modelAndView = new ModelAndView("/customerView/home");
-        modelAndView.addObject("products", products);
-        modelAndView.addObject("categories", categoryService.findAll());
         return modelAndView;
     }
 
@@ -73,27 +74,27 @@ public class UserController {
     public ModelAndView user(Principal principal, @RequestParam("q") Optional<String> name, @PageableDefault(size = 5) Pageable pageable) {
         // Get authenticated user name from Principal
         Page<Product> products;
+        ModelAndView modelAndView;
         if (name.isPresent()) {
             products = productService.findAllByNameContaining(name.get(), pageable);
+            modelAndView = new ModelAndView("/customerView/home-product");
+            modelAndView.addObject("products", products);
         } else {
             products = productService.findAll(pageable);
+            modelAndView = new ModelAndView("/customerView/home");
+            modelAndView.addObject("categories", categoryService.findAll());
         }
-        ModelAndView modelAndView = new ModelAndView("/customerView/home");
-        modelAndView.addObject("products", products);
-        modelAndView.addObject("categories", categoryService.findAll());
-        modelAndView.addObject("username", principal.getName());
-        System.out.println(principal.getName());
         return modelAndView;
     }
 
     @GetMapping("/product-list")
-    public ModelAndView showProductListForCustomer(Principal principal, @PageableDefault(size = 5) Pageable pageable) {
+    public ModelAndView showProductListForCustomer(@PageableDefault(size = 5) Pageable pageable) {
         Page<Product> products = productService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("customerView/home-product");
         modelAndView.addObject("products", products);
-        if (principal != null) {
-            modelAndView.addObject("username", principal.getName());
-        }
+//        if (principal != null) {
+//            modelAndView.addObject("username", principal.getName());
+//        }
         return modelAndView;
     }
 
@@ -220,6 +221,13 @@ public class UserController {
         else {
             return new ModelAndView("customerView/invalid-payment");
         }
+    }
 
+    @GetMapping("/search-by-category/{categoryId}")
+    public ModelAndView showProductByCategory(@PathVariable("categoryId") Long categoryId, @PageableDefault(size = 5) Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("customerView/home-product");
+        Page<Product> products = productService.findAllByCategory(categoryId, pageable);
+        modelAndView.addObject("products", products);
+        return modelAndView;
     }
 }
