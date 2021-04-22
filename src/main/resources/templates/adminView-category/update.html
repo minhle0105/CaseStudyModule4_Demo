@@ -13,11 +13,11 @@
         </div>
         <div class="col-md-3"></div>
         <div class="col-md-3">
-            <a th:href="@{/categories/list}" class="btn btn-link">Back to category list</a>
+            <a th:href="@{/admin/categories/list}" class="btn btn-link">Back to category list</a>
         </div>
     </div>
     <div class="row">
-        <form th:object="${category}" th:action="@{/categories/update}" method="post">
+        <form th:object="${category}" th:action="@{/admin/categories/update}" method="post">
             <div class="form-group">
                 <label for="productId">Product ID</label>
                 <input type="hidden" readonly class="form-control" id="productId" th:field="*{id}">

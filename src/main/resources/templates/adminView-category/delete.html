@@ -11,11 +11,11 @@
         <div class="col-md-12">
             <h1>Delete this category</h1>
             <h4>Are you sure?</h4>
-            <h4><a th:href="@{/categories/list}" class="btn btn-link">Changed your mind? Back to category list</a></h4>
+            <h4><a th:href="@{/admin/categories/list}" class="btn btn-link">Changed your mind? Back to category list</a></h4>
         </div>
     </div>
     <div class="row">
-        <form th:object="${category}" th:action="@{/categories/delete}" method="post">
+        <form th:object="${category}" th:action="@{/admin/categories/delete}" method="post">
             <div class="form-group">
                 <label for="productId">Category ID</label>
                 <input type="hidden" readonly class="form-control" id="productId" th:field="*{id}">

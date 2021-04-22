@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-3">
             <h1>Category List</h1>
-            <a th:href="@{/categories/create}" class="btn btn-success">Add new category</a>
+            <a th:href="@{/admin/categories/create}" class="btn btn-success">Add new category</a>
         </div>
         <div class="col-md-4"></div>
         <div class="col-md-5"></div>
@@ -32,8 +32,8 @@
                 <td>
                     <img th:src="@{'/images/' + ${category.ImageLink}}" alt="Error" width="100" height="100">
                 </td>
-                <td><a th:href="@{/categories/delete/__${category.id}__}" class="btn btn-danger">Delete</a></td>
-                <td><a th:href="@{/categories/edit/__${category.id}__}" class="btn btn-primary">Edit</a></td>
+                <td><a th:href="@{/admin/categories/delete/__${category.id}__}" class="btn btn-danger">Delete</a></td>
+                <td><a th:href="@{/admin/categories/edit/__${category.id}__}" class="btn btn-primary">Edit</a></td>
             </tr>
             </tbody>
         </table>
