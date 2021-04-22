@@ -72,7 +72,7 @@ public class CartItemController {
         if (cartItemToUpdate.isPresent()) {
             if (action.equals("decrease")) {
                 if (cartItemToUpdate.get().getQuantity() == 1) {
-                    cartItemService.deleteCartItemByUser(cartItemId);
+                    cartItemService.deleteCartItemByCartItemId(cartItemId);
                 } else {
                     cartItemToUpdate.get().setQuantity(cartItemToUpdate.get().getQuantity() - 1);
                 }
@@ -88,7 +88,7 @@ public class CartItemController {
 
     @GetMapping("/delete/{cartItemId}/{username}")
     public String deleteItem(@PathVariable("cartItemId") Long id, @PathVariable("username") String username) {
-        cartItemService.deleteCartItemByUser(id);
+        cartItemService.deleteCartItemByCartItemId(id);
         return "redirect:/cart/show/{username}";
     }
 }
