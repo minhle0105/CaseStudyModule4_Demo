@@ -30,9 +30,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="search-content">
-                    <form action="#" method="get">
-                        <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                        <button type="submit"><img src="/img/core-img/search.png" alt=""></button>
+                    <form th:action="@{/}" method="get">
+                        <input type="search" name="q" id="search" placeholder="Type Product Name">
+                        <button type="submit"><img src="/core-img/search.png" alt=""></button>
                     </form>
                 </div>
             </div>
@@ -48,7 +48,7 @@
     <div class="mobile-nav">
         <!-- Navbar Brand -->
         <div class="amado-navbar-brand">
-            <a href="index.html"><img src="/img/core-img/logo.png" alt=""></a>
+            <a href="/"><img src="/core-img/logo.png" alt=""></a>
         </div>
         <!-- Navbar Toggler -->
         <div class="amado-navbar-toggler">
@@ -64,7 +64,7 @@
         </div>
         <!-- Logo -->
         <div class="logo">
-            <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+            <a href="/"><img src="/core-img/logo.png" alt=""></a>
         </div>
         <!-- Amado Nav -->
         <nav class="amado-nav">
