@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/admin/products")
 public class ProductController {
 
     @Value(value = "${upload.path}")
@@ -114,7 +114,7 @@ public class ProductController {
         product.setImgUrl(fileName);
         product.setCategory(productForm.getCategory());
         productService.save(product);
-        return "redirect:/products/list";
+        return "redirect:/admin/products/list";
     }
 
     @GetMapping("/delete/{id}")
@@ -133,6 +133,6 @@ public class ProductController {
     @PostMapping("/delete")
     public String deleteProduct(@ModelAttribute Product product) {
         productService.remove(product.getId());
-        return "redirect:/products/list";
+        return "redirect:/admin/products/list";
     }
 }

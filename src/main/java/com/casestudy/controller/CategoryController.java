@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/categories")
+@RequestMapping("/admin/categories")
 public class CategoryController {
 
     @Value(value = "${upload.path}")
@@ -75,7 +75,7 @@ public class CategoryController {
     @PostMapping("/update")
     public String updateProduct(@ModelAttribute Category category) {
         categoryService.save(category);
-        return "redirect:/categories/list";
+        return "redirect:/admin/categories/list";
     }
 
     @GetMapping("/delete/{id}")
@@ -94,6 +94,6 @@ public class CategoryController {
     @PostMapping("/delete")
     public String deleteProduct(@ModelAttribute Category category) {
         categoryService.remove(category.getId());
-        return "redirect:/categories/list";
+        return "redirect:/admin/categories/list";
     }
 }

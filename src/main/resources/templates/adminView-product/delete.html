@@ -11,11 +11,11 @@
         <div class="col-md-12">
             <h1>Delete this product</h1>
             <h4>Are you sure?</h4>
-            <h4><a th:href="@{/products/list}" class="btn btn-link">Changed your mind? Back to product list</a></h4>
+            <h4><a th:href="@{/admin/products/list}" class="btn btn-link">Changed your mind? Back to product list</a></h4>
         </div>
     </div>
     <div class="row">
-        <form th:object="${product}" th:action="@{/products/delete}" method="post">
+        <form th:object="${product}" th:action="@{/admin/products/delete}" method="post">
             <div class="form-group">
                 <label for="productId">Product ID</label>
                 <input type="text" readonly class="form-control" id="productId" th:field="*{id}">
