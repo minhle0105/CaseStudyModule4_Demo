@@ -82,8 +82,8 @@
             <div class="row">
                 <div class="col-md-3">
                     <h1>Product List</h1>
-                    <a th:href="@{/products/create}" class="btn btn-success">Add New Product</a>
-                    <a th:href="@{/categories/list}" class="btn btn-success">Category List</a>
+                    <a th:href="@{/admin/products/create}" class="btn btn-success">Add New Product</a>
+                    <a th:href="@{/admin/categories/list}" class="btn btn-success">Category List</a>
                 </div>
                 <div class="col-md-4"></div>
                 <div class="col-md-5">
@@ -130,8 +130,8 @@
                         </td>
                         <td th:text="${product.description}"></td>
                         <td th:text="${product.category != null ? product.category.name : ''}"></td>
-                        <td><a th:href="@{/products/delete/__${product.id}__}" class="btn btn-danger">Delete</a></td>
-                        <td><a th:href="@{/products/edit/__${product.id}__}" class="btn btn-primary">Edit</a></td>
+                        <td><a th:href="@{/admin/products/delete/__${product.id}__}" class="btn btn-danger">Delete</a></td>
+                        <td><a th:href="@{/admin/products/edit/__${product.id}__}" class="btn btn-primary">Edit</a></td>
                     </tr>
                     </tbody>
                 </table>
