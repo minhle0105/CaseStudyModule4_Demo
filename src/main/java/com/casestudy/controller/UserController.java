@@ -1,17 +1,16 @@
 package com.casestudy.controller;
 
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import com.casestudy.model.Product;
 import com.casestudy.model.Role;
 import com.casestudy.model.User;
+import com.casestudy.service.cartItem.ICartItemService;
 import com.casestudy.service.category.ICategoryService;
 import com.casestudy.service.product.IProductService;
 import com.casestudy.service.user.IUserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +41,9 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ICartItemService cartItemService;
 
     @ModelAttribute("username")
     public String getUsername(Principal principal) {
@@ -85,7 +87,7 @@ public class UserController {
     }
 
     @GetMapping("/product-list")
-    public ModelAndView showProductListForCustomer(Principal principal, @PageableDefault(size = 10) Pageable pageable) {
+    public ModelAndView showProductListForCustomer(Principal principal, @PageableDefault(size = 5) Pageable pageable) {
         Page<Product> products = productService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("customerView/home-product");
         modelAndView.addObject("products", products);
@@ -200,5 +202,24 @@ public class UserController {
         user.setRoles(roles);
         userService.save(user);
         return "redirect:/";
+    }
+
+    @GetMapping("/payment")
+    public ModelAndView showPaymentForm() {
+        return new ModelAndView("customerView/checkout");
+    }
+
+    @PostMapping("/payment")
+    public ModelAndView validatePayment(@RequestParam("card-num") String creditCardNumber, @RequestParam("username") String username) {
+        boolean cardIsValid = userService.validatePayment(creditCardNumber);
+        if (cardIsValid) {
+            User user = userService.findByUsername(username);
+            cartItemService.deleteCartItemByUser(user);
+            return new ModelAndView("customerView/thank-you");
+        }
+        else {
+            return new ModelAndView("customerView/invalid-payment");
+        }
+
     }
 }

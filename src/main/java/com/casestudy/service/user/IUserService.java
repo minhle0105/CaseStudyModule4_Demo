@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface IUserService extends IGeneralService<User> {
     User findByUsername(String username);
+    boolean validatePayment(String creditCardNumber);
 }

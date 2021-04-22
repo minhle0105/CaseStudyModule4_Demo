@@ -32,7 +32,7 @@
                 <div class="search-content">
                     <form action="#" method="get">
                         <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                        <button type="submit"><img src="img/core-img/search.png" alt=""></button>
+                        <button type="submit"><img src="/img/core-img/search.png" alt=""></button>
                     </form>
                 </div>
             </div>
@@ -48,7 +48,7 @@
     <div class="mobile-nav">
         <!-- Navbar Brand -->
         <div class="amado-navbar-brand">
-            <a href="index.html"><img src="/img/core-img/logo.png" alt=""></a>
+            <a th:href="@{/}"><img src="/img/core-img/logo.png" alt=""></a>
         </div>
         <!-- Navbar Toggler -->
         <div class="amado-navbar-toggler">
@@ -64,16 +64,15 @@
         </div>
         <!-- Logo -->
         <div class="logo">
-            <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+            <a th:href="@{/}"><img src="/img/core-img/logo.png" alt=""></a>
         </div>
         <!-- Amado Nav -->
         <nav class="amado-nav">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="product-details.html">Product</a></li>
-                <li class="active"><a href="cart.html">Cart</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
+                <li class="active"><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/}">Shop</a></li>
+                <li><a th:href="@{/product-list}">Product</a></li>
+                <li><a th:href="@{/cart/show/__${username}__}">Cart</a></li>
             </ul>
         </nav>
         <!-- Button Group -->
@@ -106,12 +105,11 @@
                     </div>
 
                     <div class="cart-table clearfix">
-                        <table class="table table-responsive">
+                        <table style="border: 1px solid black" class="table table-responsive">
                             <thead>
                             <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Price</th>
+                                <th>Image</th>
+                                <th>Item</th>
                                 <th>Quantity</th>
                                 <th>Remove</th>
                             </tr>
@@ -123,11 +121,9 @@
                                 </td>
                                 <td class="cart_product_desc">
                                     <h5 th:text="${cartItem.getProduct().getName()}"></h5>
+                                    <h6 th:text="'$' + ${cartItem.getProduct().getPrice()}"></h6>
                                 </td>
-                                <td class="price">
-                                    <span th:text="${cartItem.getProduct().getPrice()}"></span>
-                                </td>
-                                <td class="qty" colspan="2">
+                                <td class="qty">
                                     <div class="qty-btn">
                                         <div class="qty">
                                             <a style="font-size: larger" th:text="${'-'}" class="qty-minus"
@@ -135,15 +131,19 @@
                                             <span th:text="${cartItem.quantity}"></span>
                                             <a style="font-size: larger" th:text="${'+'}" class="qty-minus"
                                                th:href="@{/cart/update/__${username}__/__${cartItem.id}__(action='increase')}"></a>
-                                            <a th:href="@{/cart/delete/__${cartItem.id}__/__${username}__}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="red"
-                                                     class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                                    <path fill-rule="evenodd"
-                                                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                                </svg>
-                                            </a>
                                         </div>
+                                    </div>
+                                </td>
+                                <td class="price">
+                                    <div>
+                                        <a th:href="@{/cart/delete/__${cartItem.id}__/__${username}__}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="red"
+                                                 class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                <path fill-rule="evenodd"
+                                                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                            </svg>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -160,7 +160,7 @@
                             <li><span>Total:</span> <span th:text="${sum}"></span></li>
                         </ul>
                         <div class="cart-btn mt-100">
-                            <a href="#" class="btn amado-btn w-100">Checkout</a>
+                            <a th:href="@{/payment}" class="btn amado-btn w-100">Checkout</a>
                         </div>
                     </div>
                 </div>

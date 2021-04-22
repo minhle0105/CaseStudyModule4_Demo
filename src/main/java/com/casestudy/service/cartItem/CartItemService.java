@@ -60,8 +60,14 @@ public class CartItemService implements ICartItemService {
 
     @Override
     @Transactional
-    public void deleteCartItemByUser(Long id) {
-        cartItemRepository.deleteCartItemByUser(id);
+    public void deleteCartItemByCartItemId(Long id) {
+        cartItemRepository.deleteCartItemByCartItemId(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCartItemByUser(User user) {
+        cartItemRepository.deleteCartItemByUser(user);
     }
 
 }
