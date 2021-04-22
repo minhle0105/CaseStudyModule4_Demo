@@ -67,34 +67,34 @@
             <a th:href="@{/logout}" class="btn amado-btn mb-15">Log out</a>
         </div>
 
-<div class="cart-fav-search mb-100">
-    <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-    <a href="#" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
-    <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
-</div>
+        <div class="cart-fav-search mb-100">
+            <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
+            <a href="#" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
+            <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
+        </div>
 
-<div class="social-info d-flex justify-content-between">
-    <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-</div>
-</header>
+        <div class="social-info d-flex justify-content-between">
+            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </div>
+    </header>
 
     <div class="products-catagories-area">
         <div class="d-flex flex-wrap">
-        <div th:each="categories:${categories}" class="flex-1-3">
-            <div class="w-100 mh-450">
-                <a href="shop.html">
-                    <img th:src="@{'/images/' + ${categories.getImageLink()}}" class="img-product" alt="">
-                    <div class="description">
-                        <div class="line"></div>
-                        <p>From $180</p>
-                        <h4 th:text="${categories.getName()}"></h4>
-                    </div>
-                </a>
+            <div th:each="categories:${categories}" class="flex-1-3">
+                <div class="w-100 mh-450">
+                    <a href="shop.html">
+                        <img th:src="@{'/images/' + ${categories.getImageLink()}}" class="img-product" alt="">
+                        <div class="description">
+                            <div class="line"></div>
+                            <p>From $180</p>
+                            <h4 th:text="${categories.getName()}"></h4>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 
