@@ -226,4 +226,11 @@ public class UserController {
         modelAndView.addObject("products", products);
         return modelAndView;
     }
+
+    @GetMapping("/error-403")
+    public ModelAndView showPage403(){
+        ModelAndView modelAndView = new ModelAndView("/error-403");
+        return modelAndView;
+    }
+
 }

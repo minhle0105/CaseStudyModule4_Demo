@@ -52,6 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/customerView/login").passwordParameter("password").usernameParameter("username").permitAll()
                 .successHandler(new CustomSuccessHandler())
                 .and()
-                .logout().logoutSuccessUrl("/");
+                .logout().logoutSuccessUrl("/").and().exceptionHandling().accessDeniedPage("/error-403");
     }
 }
