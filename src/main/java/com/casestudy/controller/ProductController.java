@@ -135,4 +135,6 @@ public class ProductController {
         productService.remove(product.getId());
         return "redirect:/admin/products/list";
     }
+
+
 }
