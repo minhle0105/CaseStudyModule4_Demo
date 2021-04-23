@@ -70,8 +70,8 @@
         <nav class="amado-nav">
             <ul>
                 <li class="active"><a th:href="@{/}">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="product-details.html">Product</a></li>
+                <li><a th:href="@{/}">Shop</a></li>
+                <li><a th:href="@{/product-list}">Product</a></li>
                 <li><a th:href="@{/cart/show/__${username}__}">Cart</a></li>
             </ul>
         </nav>
@@ -113,14 +113,8 @@
 
             <!--  Catagories  -->
             <div class="catagories-menu">
-                <ul>
-                    <li class="active"><a href="#">Chairs</a></li>
-                    <li><a href="#">Beds</a></li>
-                    <li><a href="#">Accesories</a></li>
-                    <li><a href="#">Furniture</a></li>
-                    <li><a href="#">Home Deco</a></li>
-                    <li><a href="#">Dressings</a></li>
-                    <li><a href="#">Tables</a></li>
+                <ul th:each="category : ${categories}">
+                    <li><a th:href="@{/search-by-category/__${category.getId()}__}" th:text="${category.getName()}"></a></li>
                 </ul>
             </div>
         </div>

@@ -3,6 +3,7 @@ package com.casestudy.controller;
 import java.security.Principal;
 import java.util.*;
 
+import com.casestudy.model.Category;
 import com.casestudy.model.Product;
 import com.casestudy.model.Role;
 import com.casestudy.model.User;
@@ -57,6 +58,7 @@ public class UserController {
     public ModelAndView index(@RequestParam("q") Optional<String> name, @PageableDefault(size = 5) Pageable pageable) {
         Page<Product> products;
         ModelAndView modelAndView;
+        Iterable<Category> categories = categoryService.findAll();
         if (name.isPresent()) {
             products = productService.findAllByNameContaining(name.get(), pageable);
             modelAndView = new ModelAndView("/customerView/home-product");
@@ -64,8 +66,8 @@ public class UserController {
         } else {
             products = productService.findAll(pageable);
             modelAndView = new ModelAndView("/customerView/home");
-            modelAndView.addObject("categories", categoryService.findAll());
         }
+        modelAndView.addObject("categories", categories);
         return modelAndView;
     }
 
@@ -74,6 +76,7 @@ public class UserController {
         // Get authenticated user name from Principal
         Page<Product> products;
         ModelAndView modelAndView;
+        Iterable<Category> categories = categoryService.findAll();
         if (name.isPresent()) {
             products = productService.findAllByNameContaining(name.get(), pageable);
             modelAndView = new ModelAndView("/customerView/home-product");
@@ -83,14 +86,17 @@ public class UserController {
             modelAndView = new ModelAndView("/customerView/home");
             modelAndView.addObject("categories", categoryService.findAll());
         }
+        modelAndView.addObject("categories", categories);
         return modelAndView;
     }
 
     @GetMapping("/product-list")
     public ModelAndView showProductListForCustomer(@PageableDefault(size = 5) Pageable pageable) {
         Page<Product> products = productService.findAll(pageable);
+        Iterable<Category> categories = categoryService.findAll();
         ModelAndView modelAndView = new ModelAndView("customerView/home-product");
         modelAndView.addObject("products", products);
+        modelAndView.addObject("categories", categories);
         return modelAndView;
     }
 
@@ -223,7 +229,9 @@ public class UserController {
     public ModelAndView showProductByCategory(@PathVariable("categoryId") Long categoryId, @PageableDefault(size = 5) Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("customerView/home-product");
         Page<Product> products = productService.findAllByCategory(categoryId, pageable);
+        Iterable<Category> categories = categoryService.findAll();
         modelAndView.addObject("products", products);
+        modelAndView.addObject("categories", categories);
         return modelAndView;
     }
 
