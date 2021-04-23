@@ -91,9 +91,6 @@ public class UserController {
         Page<Product> products = productService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("customerView/home-product");
         modelAndView.addObject("products", products);
-//        if (principal != null) {
-//            modelAndView.addObject("username", principal.getName());
-//        }
         return modelAndView;
     }
 
