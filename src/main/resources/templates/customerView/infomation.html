@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Information</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" style="border: 1px solid mediumslateblue; margin-top: 10px">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>User Information</h1>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <a th:href="@{/}" class="btn btn-link">Back to Home</a>
+        </div>
+    </div>
+    <div class="row">
+        <form th:object="${user}" th:action="@{/updateuser}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <div class="form-group">
+                <label for="username">Username </label>
+                <input type="text" readonly class="form-control" id="username" th:field="*{username}">
+            </div>
+            <div class="form-group">
+                <label for="productId">Address</label>
+                <input type="text" class="form-control" id="productId" th:field="*{addRess}">
+            </div>
+            <div class="form-group">
+                <label for="productName">Email</label>
+                <input type="text" class="form-control" id="productName" th:field="*{email}">
+            </div>
+            <div class="form-group">
+                <label for="productPrice">Name</label>
+                <input type="text" class="form-control" id="productPrice" th:field="*{name}">
+            </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="productDescription" th:field="*{password}">
+            </div>
+            <div class="form-group">
+                <label for="productImageUrl">Phone Number</label>
+                <input type="text" class="form-control" id="productImageUrl" th:field="*{phoneNumber}">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

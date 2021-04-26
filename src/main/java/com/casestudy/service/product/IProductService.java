@@ -9,4 +9,5 @@ public interface IProductService extends IGeneralService<Product> {
 
     Page<Product> findAllByNameContaining(String name, Pageable pageable);
 
+    Page<Product> findAllByCategory(Long categoryId, Pageable pageable);
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-public class ProductService implements IProductService{
+public class ProductService implements IProductService {
 
     @Autowired
     private IProductRepository productRepository;
@@ -44,5 +44,10 @@ public class ProductService implements IProductService{
     @Override
     public Page<Product> findAllByNameContaining(String name, Pageable pageable) {
         return productRepository.findAllByNameContaining(name, pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByCategory(Long categoryId, Pageable pageable) {
+        return productRepository.findAllByCategory(categoryId, pageable);
     }
 }

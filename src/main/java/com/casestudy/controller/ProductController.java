@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/admin/products")
 public class ProductController {
 
     @Value(value = "${upload.path}")
@@ -38,8 +38,7 @@ public class ProductController {
         Page<Product> products;
         if (name.isPresent()) {
             products = productService.findAllByNameContaining(name.get(), pageable);
-        }
-        else {
+        } else {
             products = productService.findAll(pageable);
         }
         Iterable<Category> categories = categoryService.findAll();
@@ -65,8 +64,7 @@ public class ProductController {
         String fileName = multipartFile.getOriginalFilename();
         try {
             FileCopyUtils.copy(productForm.getImage().getBytes(), new File(this.fileUpload + fileName));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         product.setName(productForm.getName());
@@ -93,8 +91,7 @@ public class ProductController {
             ProductForm productForm = new ProductForm(product.getId(), product.getName(), product.getPrice(), product.getDescription(), null, product.getCategory());
             modelAndView.addObject("product", productForm);
             modelAndView.addObject("categories", categories);
-        }
-        else {
+        } else {
             modelAndView = new ModelAndView("error-404");
         }
         return modelAndView;
@@ -107,8 +104,7 @@ public class ProductController {
         String fileName = multipartFile.getOriginalFilename();
         try {
             FileCopyUtils.copy(productForm.getImage().getBytes(), new File(this.fileUpload + fileName));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         product.setId(productForm.getId());
@@ -118,7 +114,7 @@ public class ProductController {
         product.setImgUrl(fileName);
         product.setCategory(productForm.getCategory());
         productService.save(product);
-        return "redirect:/products/list";
+        return "redirect:/admin/products/list";
     }
 
     @GetMapping("/delete/{id}")
@@ -128,8 +124,7 @@ public class ProductController {
         if (product.isPresent()) {
             modelAndView = new ModelAndView("/adminView-product/delete");
             modelAndView.addObject("product", product);
-        }
-        else {
+        } else {
             modelAndView = new ModelAndView("error-404");
         }
         return modelAndView;
@@ -138,6 +133,8 @@ public class ProductController {
     @PostMapping("/delete")
     public String deleteProduct(@ModelAttribute Product product) {
         productService.remove(product.getId());
-        return "redirect:/products/list";
+        return "redirect:/admin/products/list";
     }
+
+
 }

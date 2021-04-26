@@ -16,7 +16,6 @@ public class UserService implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 
-
     @Override
     public Iterable<User> findAll() {
         return userRepository.findAll();
@@ -42,4 +41,41 @@ public class UserService implements IUserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.getUserByUserName(username);
+    }
+
+    public boolean validatePayment(String creditCardNumber) {
+        boolean cardIsValid;
+        int counter1 = creditCardNumber.length() - 1;
+        int counter2 = creditCardNumber.length() - 2;
+        int sum1 = 0;
+        int sum2 = 0;
+        ArrayList<Integer> outcome = new ArrayList<>();
+        while (counter1 >= 0) {
+            sum1 += Character.getNumericValue(creditCardNumber.charAt(counter1));
+            counter1 = counter1 - 2;
+        }
+        while (counter2 >= 0) {
+            if (Character.getNumericValue(creditCardNumber.charAt(counter2)) * 2 > 9) {
+                outcome.add(Character.getNumericValue(creditCardNumber.charAt(counter2)) * 2 - 9);
+            }
+            else {
+                outcome.add(Character.getNumericValue(creditCardNumber.charAt(counter2)) * 2);
+            }
+            counter2 -= 2;
+        }
+        for (int i = 0; i < outcome.size(); i++) {
+            sum2 += outcome.get(i);
+        }
+
+        if ((sum1+sum2) % 10 == 0) {
+            cardIsValid = true;
+        }
+        else {
+            cardIsValid = false;
+        }
+        return cardIsValid;
+    }
 }
